@@ -1,0 +1,14 @@
+.HeaderContainer{
+  height: 5rem;
+  width: 100vw;
+
+  padding: 1rem 2rem;
+
+  margin-bottom: 3rem;
+
+  border-bottom: 1px solid rgb(219, 219, 219);
+}
+
+.HeaderContainer h1 {
+  text-align: left;
+}
