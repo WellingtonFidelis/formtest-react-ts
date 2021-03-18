@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import styles from "../styles/components/FormTest.module.css";
+import Api from '../services/base.service';
 
-const FormTest = () => {
+const FormTest: React.FC = () => {
   const [inputFirstName, setInputFirstName] = useState<String>();
+
+  async function loadPeople() {
+    const response = await Api.get('');
+    console.log(response);
+  }
 
   const handleChangeInputFirstName = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setInputFirstName(event.currentTarget.value);
     console.log(inputFirstName);
+  };
+
+  const handleSendData = () => {
+    alert("Wait 40' Salmo");
+    loadPeople();
   };
 
   return (
@@ -42,7 +53,7 @@ const FormTest = () => {
             name="inputDateBirth"
           />
         </label>
-        <button type="button">Send</button>
+        <button type="button" onClick={handleSendData}>Send</button>
         <p> {inputFirstName} </p>
       </form>
     </div>
