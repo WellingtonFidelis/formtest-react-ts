@@ -1,38 +1,81 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, ChangeEvent, useCallback } from "react";
 import styles from "../styles/components/FormTest.module.css";
-import Api from '../services/base.service';
+import Api from "../services/base.service";
+import api from "../services/base.service";
+
+interface Persons {
+  id: number;
+  first_name: string;
+  last_name: string;
+  birth_date: Date;
+}
+
+interface PersonAdd {
+  first_name: string;
+  last_name: string;
+  birth_date: Date;
+}
 
 const FormTest: React.FC = () => {
-  const [inputFirstName, setInputFirstName] = useState<String>();
+  // const [inputFirstName, setInputFirstName] = useState<String>();
+  const [persons, setPersons] = useState<Persons[]>([]);
+  const [personAdd, setPersonAdd] = useState<PersonAdd>({
+    first_name: "",
+    last_name: "",
+    birth_date: new Date(),
+  });
 
-  async function loadPeople() {
-    const response = await Api.get('');
-    console.log(response);
+  function updatedPersonAdd(event: ChangeEvent<HTMLInputElement>) {
+    setPersonAdd({
+      ...personAdd,
+      [event.target.name]: event.target.value,
+    });
   }
 
-  const handleChangeInputFirstName = (
+  /* const handleChangeInputFirstName = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setInputFirstName(event.currentTarget.value);
     console.log(inputFirstName);
   };
+ */
+  const onSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+    event?.preventDefault();
 
-  const handleSendData = () => {
-    alert("Wait 40' Salmo");
-    loadPeople();
+    const response = await api.post("", personAdd);
+    console.log(response);
   };
+
+  const loadPeople = useCallback(async () => {
+    const response = await Api.get("");
+    try {
+      if (response.status === 200) {
+        setPersons(response.data);
+        console.log(persons);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },[persons]) 
+
+  useEffect(() => {
+    loadPeople();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.FormTextContainer}>
-      <form action="">
+      <form onSubmit={onSubmit}>
         <label htmlFor="inputFisrtName">
           Fisrt Name
           <input
             type="text"
             className=""
             id="inputFisrtName"
-            name="inputFisrtName"
-            onChange={handleChangeInputFirstName}
+            name="first_name"
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              updatedPersonAdd(event)
+            }
           />
         </label>
         <label htmlFor="inputLastName">
@@ -41,7 +84,10 @@ const FormTest: React.FC = () => {
             type="text"
             className=""
             id="inputLastName"
-            name="inputLastName"
+            name="last_name"
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              updatedPersonAdd(event)
+            }
           />
         </label>
         <label htmlFor="inputDateBirth">
@@ -50,12 +96,37 @@ const FormTest: React.FC = () => {
             type="date"
             className=""
             id="inputDateBirth"
-            name="inputDateBirth"
+            name="birth_date"
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              updatedPersonAdd(event)
+            }
           />
         </label>
-        <button type="button" onClick={handleSendData}>Send</button>
-        <p> {inputFirstName} </p>
+        <button type="submit">Send</button>
+        {/* <p> {inputFirstName} </p> */}
       </form>
+      <div>
+        <table className="">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Birth Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {persons.map((person) => (
+              <tr key={person.id}>
+                <td>{person.id}</td>
+                <td>{person.first_name}</td>
+                <td>{person.last_name}</td>
+                <td>{person.birth_date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
