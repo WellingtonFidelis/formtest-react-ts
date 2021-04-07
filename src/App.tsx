@@ -1,14 +1,19 @@
 import React from "react";
-import HeaderComponent from "./components/Header";
+import { BrowserRouter } from 'react-router-dom';
+import Header from './components/Header';
 import FormTestComponent from "./components/FormTest";
+import Routes from './routes';
 import "./styles/global.css";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <HeaderComponent info="This is my new Header" />
-      <FormTestComponent />
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes />
+      <div className="appContainer">
+        <FormTestComponent />
+      </div>
+    </BrowserRouter>
   );
 };
 
