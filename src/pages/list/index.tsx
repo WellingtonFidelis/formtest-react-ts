@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/base.service';
+import './style.css';
 
 import Moment from 'moment';
+import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 interface CharacterProps {
   id: number,
@@ -13,6 +16,7 @@ interface CharacterProps {
 const List: React.FC = () => {
 
   const [characters, setCharacters] = useState<CharacterProps[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     getCharacters();
@@ -41,9 +45,16 @@ const List: React.FC = () => {
     return Moment(date).format("DD/MM/YYYY");
   };
 
+  const newCharacter = () => {
+    history.push('/create-character')
+  }
+
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">List page</h1>
+      <div className="d-flex flex-row justify-content-between align-middle">
+        <h1 className="mb-4">List page</h1>
+        <Button size="sm" variant="dark" id="buttonNewCharacter" onClick={newCharacter}>New Character</Button>
+      </div>
       <table className="table table-hover text-center">
         <thead>
           <tr className="border">
@@ -52,7 +63,6 @@ const List: React.FC = () => {
             <th>Last Name</th>
             <th>Birth Date</th>
             <th>Age</th>
-            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -66,8 +76,11 @@ const List: React.FC = () => {
                   <td>{last_name}</td>
                   <td>{formatDateToBR(birth_date)}</td>
                   <td>{getAgeFromBirthday(birth_date)}</td>
-                  <td></td>
-                  <td></td>
+                  <td>
+                    <Button size="sm" variant="info">Edit</Button>
+                    <Button size="sm" variant="secondary" className="ml-2">View</Button>
+                    <Button size="sm" variant="danger" className="ml-2">Delete</Button>
+                  </td>
                 </tr>
               );
             })
