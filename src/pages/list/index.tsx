@@ -46,7 +46,7 @@ const List: React.FC = () => {
   };
 
   const newCharacter = () => {
-    history.push('/create-character')
+    history.push('/create-character');
   }
 
   return (
