@@ -29,17 +29,17 @@ const FormCreate: React.FC = () => {
     getCharactersById(id);
   }, [id]);
 
-  const updatingModel = (event: ChangeEvent<HTMLInputElement>) => {
+  function updatingModel (event: ChangeEvent<HTMLInputElement>) {
     setModel({
       ...model,
       [event.target.name]: event.target.value,
     });
   }
-  const listCharacters = () => {
+  function listCharacters  () {
     history.push('/list-character');
   }
 
-  const onSubmitForm = async (event: ChangeEvent<HTMLFormElement>) => {
+  async function onSubmitForm (event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await api.post("/", model);
@@ -49,7 +49,7 @@ const FormCreate: React.FC = () => {
     }    
   }
 
-  const getCharactersById = async (id: string) => {
+  async function getCharactersById (id: string) {
     const response = await api.get(`${id}`);
     const data = await response.data;
     console.log(data);

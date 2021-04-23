@@ -22,13 +22,13 @@ const List: React.FC = () => {
     getCharacters();
   }, []);
 
-  const getCharacters = async () => {
+  async function getCharacters () {
     const response = await api.get("");
     const data = response.data;
     setCharacters(data);
   }
 
-  const getAgeFromBirthday = (date: Date) => {
+  function getAgeFromBirthday (date: Date) {
     if (date) {
       let totalMonths: number = Moment().diff(date, 'months');
       let years: number = totalMonths / 12;
@@ -41,15 +41,15 @@ const List: React.FC = () => {
     return null;
   }
 
-  const formatDateToBR = (date: Date) => {
+  function formatDateToBR (date: Date) {
     return Moment(date).format("DD/MM/YYYY");
   };
 
-  const newCharacter = () => {
+  function newCharacter () {
     history.push('/create-character');
   }
 
-  const editCharacter = (id: number) => {
+  function editCharacter  (id: number) {
     history.push(`/create-character/${id}`);
   }
 
