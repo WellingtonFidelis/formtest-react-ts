@@ -10,6 +10,7 @@ const Routes: React.FC = () => {
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/create-character" exact component={CreateForm} />
+      <Route path="/create-character/:id" exact component={CreateForm} />
       <Route path="/list-character" exact component={List} />
     </Switch>
   )

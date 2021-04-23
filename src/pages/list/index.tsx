@@ -49,6 +49,10 @@ const List: React.FC = () => {
     history.push('/create-character');
   }
 
+  const editCharacter = (id: number) => {
+    history.push(`/create-character/${id}`);
+  }
+
   return (
     <div className="container mt-5">
       <div className="d-flex flex-row justify-content-between align-middle">
@@ -77,7 +81,11 @@ const List: React.FC = () => {
                   <td>{formatDateToBR(birth_date)}</td>
                   <td>{getAgeFromBirthday(birth_date)}</td>
                   <td>
-                    <Button size="sm" variant="info">Edit</Button>
+                    <Button
+                      size="sm"
+                      variant="info"
+                      onClick={() => editCharacter(id)}
+                    >Edit</Button>
                     <Button size="sm" variant="secondary" className="ml-2">View</Button>
                     <Button size="sm" variant="danger" className="ml-2">Delete</Button>
                   </td>

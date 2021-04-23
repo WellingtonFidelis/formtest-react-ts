@@ -1,7 +1,9 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import api from '../../../services/base.service';
-import { Button, Form, Row, Col, Toast } from 'react-bootstrap';
-import { useHistory } from 'react-router';
+import { Button, Form, Row, Col } from 'react-bootstrap';
+import { useHistory, useParams } from 'react-router';
+
+import SweetAlert from 'sweetalert';
 
 interface CharacterProps {
   first_name: string,
@@ -9,14 +11,23 @@ interface CharacterProps {
   birth_date: Date,
 }
 
+interface Params {
+  id: string
+}
+
 const FormCreate: React.FC = () => {
 
+  const history = useHistory();  
+  const {id}: Params = useParams();
   const [model, setModel] = useState<CharacterProps>({
     first_name: '',
     last_name: '',
     birth_date: new Date(),
-  });
-  const history = useHistory();
+  });  
+
+  useEffect(() => {
+    getCharactersById(id);
+  }, [id]);
 
   const updatingModel = (event: ChangeEvent<HTMLInputElement>) => {
     setModel({
@@ -24,7 +35,6 @@ const FormCreate: React.FC = () => {
       [event.target.name]: event.target.value,
     });
   }
-
   const listCharacters = () => {
     history.push('/list-character');
   }
@@ -35,13 +45,14 @@ const FormCreate: React.FC = () => {
     const response = await api.post("/", model);
 
     if (response.data.status === "Ok") {
-
-      const message = {
-        "status": response.data.status,
-        "result": response.data.result,
-        "message": response.data.message,
-      }
+      SweetAlert(response.data.status, response.data.message, "success");
     }    
+  }
+
+  const getCharactersById = async (id: string) => {
+    const response = await api.get(`${id}`);
+    const data = await response.data;
+    console.log(data);
   }
 
   return (
