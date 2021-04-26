@@ -4,6 +4,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router';
 
 import SweetAlert from 'sweetalert';
+import { AxiosResponse } from 'axios';
 
 interface CharacterProps {
   first_name: string,
@@ -17,42 +18,57 @@ interface Params {
 
 const FormCreate: React.FC = () => {
 
-  const history = useHistory();  
-  const {id}: Params = useParams();
+  const history = useHistory();
+  const { id }: Params = useParams();
   const [model, setModel] = useState<CharacterProps>({
     first_name: '',
     last_name: '',
     birth_date: new Date(),
-  });  
+  });
 
   useEffect(() => {
-    getCharactersById(id);
+    if (id !== undefined) {
+      getCharactersById(id);
+    }
   }, [id]);
 
-  function updatingModel (event: ChangeEvent<HTMLInputElement>) {
+  function updatingModel(event: ChangeEvent<HTMLInputElement>) {
     setModel({
       ...model,
       [event.target.name]: event.target.value,
     });
   }
-  function listCharacters  () {
+  function listCharacters() {
     history.push('/list-character');
   }
-
-  async function onSubmitForm (event: ChangeEvent<HTMLFormElement>) {
+  async function onSubmitForm(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await api.post("/", model);
+    if (id !== undefined) {
+      const response = await api.patch(`${id}/`, model);
+      alertMessage(response);
+    } else {
+      const response = await api.post("/", model);
+      alertMessage(response);
+    }
 
-    if (response.data.status === "Ok") {
-      SweetAlert(response.data.status, response.data.message, "success");
-    }    
   }
-
-  async function getCharactersById (id: string) {
+  async function getCharactersById(id: string) {
     const response = await api.get(`${id}/`);
     const data = await response.data;
-    console.log(data);
+    setModel({
+      first_name: data.result.first_name,
+      last_name: data.result.last_name,
+      birth_date: data.result.birth_date,
+    });
+  }
+  function alertMessage(response: AxiosResponse) {
+    if (response.data.status === "Ok") {
+      SweetAlert(response.data.status, response.data.message, "success");
+      listCharacters();
+    } else {
+      SweetAlert(response.data.status, response.data.message, "error");
+    }
   }
 
   return (
@@ -65,17 +81,24 @@ const FormCreate: React.FC = () => {
         <Row>
           <Form.Group className="col col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter the first name" name="first_name" onChange={(event: ChangeEvent<HTMLInputElement>) => updatingModel(event)} />
+            <Form.Control
+              type="text"
+              placeholder="Enter the first name"
+              name="first_name"
+              value={model.first_name}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => updatingModel(event)}
+            />
             <Form.Text className="text-muted">
               Like Naruto
             </Form.Text>
           </Form.Group>
           <Form.Group className="col col-xs-12 col-sm-12 col-md-4 col-lg-4">
             <Form.Label>Last name</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter the last name" 
-              name="last_name" 
+            <Form.Control
+              type="text"
+              placeholder="Enter the last name"
+              name="last_name"
+              value={model.last_name}
               onChange={(event: ChangeEvent<HTMLInputElement>) => updatingModel(event)}
             />
             <Form.Text className="text-muted">
@@ -88,6 +111,7 @@ const FormCreate: React.FC = () => {
               type="date"
               placeholder=""
               name="birth_date"
+              value={String(model.birth_date)}
               onChange={(event: ChangeEvent<HTMLInputElement>) => updatingModel(event)}
             />
             <Form.Text className="text-muted"></Form.Text>
