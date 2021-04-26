@@ -50,11 +50,7 @@ const FormCreate: React.FC = () => {
   }
 
   async function getCharactersById (id: string) {
-    const response = await api.get(`${id}`, {
-       headers: {
-        "Access-Control-Allow-Origin": "*",
-        } 
-    });
+    const response = await api.get(`${id}/`);
     const data = await response.data;
     console.log(data);
   }
