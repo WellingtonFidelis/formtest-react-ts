@@ -22,13 +22,39 @@ const List: React.FC = () => {
     getCharacters();
   }, []);
 
-  async function getCharacters () {
+  async function getCharacters() {
     const response = await api.get("");
     const data = response.data;
     setCharacters(data);
   }
 
-  function getAgeFromBirthday (date: Date) {
+  async function deleteCharacter(id:number) {
+    const response = await api.delete(`${id}/`);
+    getCharacters();
+    return response;
+  }
+
+  function alertDelete(id: number) {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: ["No, cancel please.", "Yes, I wanna."],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          sweetAlert("Done! The character has been deleted.", {
+            icon: "success",
+          });
+          deleteCharacter(id);
+        } else {
+          sweetAlert("Keep calm... The character is still registered.");
+        }
+      });
+  }
+
+  function getAgeFromBirthday(date: Date) {
     if (date) {
       let totalMonths: number = Moment().diff(date, 'months');
       let years: number = totalMonths / 12;
@@ -41,16 +67,20 @@ const List: React.FC = () => {
     return null;
   }
 
-  function formatDateToBR (date: Date) {
+  function formatDateToBR(date: Date) {
     return Moment(date).format("DD/MM/YYYY");
   };
 
-  function newCharacter () {
+  function newCharacter() {
     history.push('/create-character');
   }
 
-  function editCharacter  (id: number) {
+  function editCharacter(id: number) {
     history.push(`/create-character/${id}`);
+  }
+
+  function detailCharacter(id: number) {
+    history.push(`/detail-character/${id}`);
   }
 
   return (
@@ -86,8 +116,18 @@ const List: React.FC = () => {
                       variant="info"
                       onClick={() => editCharacter(id)}
                     >Edit</Button>
-                    <Button size="sm" variant="secondary" className="ml-2">View</Button>
-                    <Button size="sm" variant="danger" className="ml-2">Delete</Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="ml-2"
+                      onClick={() => detailCharacter(id)}
+                    >Detail</Button>
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      className="ml-2"
+                      onClick={() => alertDelete(id)}
+                    >Delete</Button>
                   </td>
                 </tr>
               );
