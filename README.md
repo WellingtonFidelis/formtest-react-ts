@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+<h1 align="center">
+    <img width="400px" height="200px" alt="" title="" src="https://marcas-logos.net/wp-content/uploads/2020/03/GITHUB-LOGO.png?raw=true" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center">
+  Narutinho CRUD - A tribute to Naruto
+</h3>
 
-## Available Scripts
+<p align="center">
+  <a href="https://github.com/WellingtonFidelis">
+    <img alt="By Wellington Fidelis" src="https://img.shields.io/badge/made%20by-Wellington%20Fidelis-5965e0">
+  </a>
 
-In the project directory, you can run:
+  <img alt="Last Commit" src="https://img.shields.io/github/last-commit/WellingtonFidelis/formtest-react-ts?color=rgb(89,101,224)">
 
-### `yarn start`
+  <img alt="Contributors" src="https://img.shields.io/github/contributors/WellingtonFidelis/formtest-react-ts?color=rgb(89,101,224)">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361?color=rgb(89,101,224)">
+</p>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<p align="center">
+</p>
 
-### `yarn test`
+# :pushpin: Tabela de conteúdos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* [Sobre o projeto](#satisfied-sobre-o-projeto)
+* [Layout](#panda_face-layout)
+* [Tecnologias](#snowflake-tecnologias)
+* [Como rodar o projeto](#question-como-rodar-o-projeto)
+* [Autor](#closed_book-autor)
 
-### `yarn build`
+---
+# :satisfied: Sobre o projeto
+This project was created to use with apps tests, always that need a frontend, made with React and typescript. Made to learn more about React.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
+# :panda_face: Layout
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
+# :snowflake: Tecnologias
+* [React](https://pt-br.reactjs.org/)
+* [Typescript](https://www.typescriptlang.org/)
+* [Axios](https://github.com/axios/axios)
+* [React Bootstrap](https://react-bootstrap.github.io/)
+* [Bootstrap](https://getbootstrap.com/)
+* [SweetAlert](https://sweetalert.js.org/)
+* [Yarn](https://yarnpkg.com/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
+# :question: Como rodar o projeto
+## Acessando direto pelo site:
+### Entre em contato para lhe enviar o link para acesso.
 
-### `yarn eject`
+## Rodando na máquina local:
+(certifique-se de ter instalado na sua máquina o [Node.js](https://nodejs.org/en/) e [Yarn](https://yarnpkg.com/))
+1. Abra o terminal na pasta desejada para clonar o repositório e execute o comando:
+``` bash
+git clone https://github.com/WellingtonFidelis/formtest-react-ts.git
+```
+2. Depois de concluído, execute os seguintes comandos:
+``` bash
+cd formtest-react-ts
+```
+3. Para instalar as libraries:
+``` bash
+yarn
+```
+4. Para rodar na sua máquina local:
+``` bash
+yarn start
+```
+5. Para gerar o production build:
+``` bash
+yarn build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+# :closed_book: Autor
+Feito por [Wellington Fidelis](https://github.com/WellingtonFidelis).
+### :octocat: Github: https://github.com/WellingtonFidelis
+### :link: LinkedIn: https://www.linkedin.com/in/wellington-fidelis-7b02b167/
+### :camera: Instagram: https://www.instagram.com/wellingtonfidelis/
